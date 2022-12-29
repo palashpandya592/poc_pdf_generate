@@ -7,6 +7,7 @@ import 'package:printing/printing.dart';
 
 class DetailPage extends StatelessWidget {
   final Invoice invoice;
+
   const DetailPage({
     Key? key,
     required this.invoice,
@@ -63,20 +64,33 @@ class DetailPage extends StatelessWidget {
                     'Invoice Items',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  ...invoice.items.map(
-                    (e) => ListTile(
-                      title: Text(e.description),
-                      trailing: Text(
-                        e.cost.toStringAsFixed(2),
-                      ),
-                    ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: invoice.items.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                          subtitle: Text(
+                              invoice.items[index].cost.toStringAsFixed(2)),
+                          title: Text(invoice.items[index].description),
+                          trailing: Image.network(invoice.img));
+                    },
                   ),
+                  /*  ...invoice.items.map(
+                    (e) => ListTile(
+                        subtitle: Text(              +
+                          e.cost.toStringAsFixed(2),
+                          0
+                        ),
+                        title: Text(e.description),
+                        trailing: Image.network(invoice.img)),
+                  ),*/
+
                   DefaultTextStyle.merge(
                     style: Theme.of(context).textTheme.headline4,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text("Total"),
+                        const Text("Total"),
                         Text(
                           invoice.totalCost().toStringAsFixed(2),
                         ),
