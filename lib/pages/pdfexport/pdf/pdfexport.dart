@@ -10,12 +10,12 @@ import 'package:flutter/services.dart' show rootBundle;
 Future<Uint8List> makePdf(Invoice invoice) async {
   final pdf = p.Document();
   final imageLogo = p.MemoryImage(
-      (await rootBundle.load('assets/technical_logo.png'))q
+      (await rootBundle.load('assets/technical_logo.png'))
           .buffer
           .asUint8List());
   final imageItem = p.MemoryImage(
       (await rootBundle.load("assets/img.png")).buffer.asUint8List());
-  pdf.addPage(p.MultiPage(
+  /* pdf.addPage(p.MultiPage(
           pageFormat: PdfPageFormat.a4,
           build: (context) {
             p.Column(children: [
@@ -150,146 +150,145 @@ Future<Uint8List> makePdf(Invoice invoice) async {
                 ),
               ),
             ]);
-          })
-      /*p.Page(
-      build: (context) {
-        return p.Column(
-          children: [
-            p.Row(
-              mainAxisAlignment: p.MainAxisAlignment.spaceBetween,
-              children: [
-                p.Column(
-                  children: [
-                    p.Text("Attention to: ${invoice.customer}"),
-                    p.Text(invoice.address),
-                  ],
-                  crossAxisAlignment: p.CrossAxisAlignment.start,
-                ),
-                p.SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: p.Image(imageLogo),
-                )
-              ],
-            ),
-            p.Container(height: 50),
-            p.Table(
-              border: p.TableBorder.all(color: PdfColors.black),
-              children: [
-                p.TableRow(
-                  children: [
-                    p.Padding(
-                      child: p.Text(
-                        'INVOICE FOR PAYMENT',
-                        style: p.Theme.of(context).header4,
-                        textAlign: p.TextAlign.center,
-                      ),
-                      padding: const p.EdgeInsets.all(20),
+          })*/
+  p.Page(
+    build: (context) {
+      return p.Column(
+        children: [
+          p.Row(
+            mainAxisAlignment: p.MainAxisAlignment.spaceBetween,
+            children: [
+              p.Column(
+                children: [
+                  p.Text("Attention to: ${invoice.customer}"),
+                  p.Text(invoice.address),
+                ],
+                crossAxisAlignment: p.CrossAxisAlignment.start,
+              ),
+              p.SizedBox(
+                height: 150,
+                width: 150,
+                child: p.Image(imageLogo),
+              )
+            ],
+          ),
+          p.Container(height: 50),
+          p.Table(
+            border: p.TableBorder.all(color: PdfColors.black),
+            children: [
+              p.TableRow(
+                children: [
+                  p.Padding(
+                    child: p.Text(
+                      'INVOICE FOR PAYMENT',
+                      style: p.Theme.of(context).header4,
+                      textAlign: p.TextAlign.center,
                     ),
-                  ],
-                ),
-                ...invoice.items.map(
-                  (e) => p.TableRow(
-                    children: [
-                      p.Expanded(
-                        child: PaddedText(e.description),
-                        flex: 2,
-                      ),
-                      p.Expanded(
-                        child: PaddedText("\$${e.cost}"),
-                        flex: 1,
-                      ),
-                      p.Expanded(
-                          child: p.SizedBox(
-                        child: p.Image(
-                          imageItem,
-                          height: 50,
-                          width: 70,
-                        ),
-                      )),
-                      // SizedBox(
-                      //   child: Image(imageItem),
-                      // )
-                    ],
+                    padding: const p.EdgeInsets.all(20),
                   ),
-                ),
-                p.TableRow(
-                  children: [
-                    PaddedText('TAX', align: p.TextAlign.right),
-                    PaddedText(
-                        '\$${(invoice.totalCost() * 0.1).toStringAsFixed(2)}'),
-                  ],
-                ),
-                p.TableRow(
-                  children: [
-                    PaddedText('TOTAL', align: p.TextAlign.right),
-                    PaddedText(
-                        '\$${(invoice.totalCost() * 1.1).toStringAsFixed(2)}')
-                  ],
-                )
-              ],
-            ),
-            p.Padding(
-              child: p.Text(
-                "THANK YOU FOR YOUR CUSTOM!",
-                style: p.Theme.of(context).header2,
+                ],
               ),
-              padding: p.EdgeInsets.all(20),
-            ),
-            p.Text(
-                "Please forward the below slip to your accounts payable department."),
-            p.Divider(
-              height: 1,
-              borderStyle: p.BorderStyle.dashed,
-            ),
-            p.Container(height: 50),
-            p.Table(
-              border: p.TableBorder.all(color: PdfColors.black),
-              children: [
-                p.TableRow(
+              ...invoice.items.map(
+                (e) => p.TableRow(
                   children: [
-                    PaddedText('Account Number'),
-                    PaddedText(
-                      '1234 1234',
-                    )
+                    p.Expanded(
+                      child: PaddedText(e.description),
+                      flex: 2,
+                    ),
+                    p.Expanded(
+                      child: PaddedText("\$${e.cost}"),
+                      flex: 1,
+                    ),
+                    p.Expanded(
+                        child: p.SizedBox(
+                      child: p.Image(
+                        imageItem,
+                        height: 50,
+                        width: 70,
+                      ),
+                    )),
+                    // SizedBox(
+                    //   child: Image(imageItem),
+                    // )
                   ],
                 ),
-                p.TableRow(
-                  children: [
-                    PaddedText(
-                      'Account Name',
-                    ),
-                    PaddedText(
-                      'ADAM FAMILY TRUST',
-                    )
-                  ],
-                ),
-                p.TableRow(
-                  children: [
-                    PaddedText(
-                      'Total Amount to be Paid',
-                    ),
-                    PaddedText(
-                        '\$${(invoice.totalCost() * 1.1).toStringAsFixed(2)}')
-                  ],
-                )
-              ],
-            ),
-            p.Padding(
-              padding: p.EdgeInsets.all(30),
-              child: p.Text(
-                'Please ensure all cheques are payable to the ADAM FAMILY TRUST.',
-                style: p.Theme.of(context).header3.copyWith(
-                      fontStyle: p.FontStyle.italic,
-                    ),
-                textAlign: p.TextAlign.center,
               ),
+              p.TableRow(
+                children: [
+                  PaddedText('TAX', align: p.TextAlign.right),
+                  PaddedText(
+                      '\$${(invoice.totalCost() * 0.1).toStringAsFixed(2)}'),
+                ],
+              ),
+              p.TableRow(
+                children: [
+                  PaddedText('TOTAL', align: p.TextAlign.right),
+                  PaddedText(
+                      '\$${(invoice.totalCost() * 1.1).toStringAsFixed(2)}')
+                ],
+              )
+            ],
+          ),
+          p.Padding(
+            child: p.Text(
+              "THANK YOU FOR YOUR CUSTOM!",
+              style: p.Theme.of(context).header2,
             ),
-          ],
-        );
-      },
-    ),*/
+            padding: p.EdgeInsets.all(20),
+          ),
+          p.Text(
+              "Please forward the below slip to your accounts payable department."),
+          p.Divider(
+            height: 1,
+            borderStyle: p.BorderStyle.dashed,
+          ),
+          p.Container(height: 50),
+          p.Table(
+            border: p.TableBorder.all(color: PdfColors.black),
+            children: [
+              p.TableRow(
+                children: [
+                  PaddedText('Account Number'),
+                  PaddedText(
+                    '1234 1234',
+                  )
+                ],
+              ),
+              p.TableRow(
+                children: [
+                  PaddedText(
+                    'Account Name',
+                  ),
+                  PaddedText(
+                    'ADAM FAMILY TRUST',
+                  )
+                ],
+              ),
+              p.TableRow(
+                children: [
+                  PaddedText(
+                    'Total Amount to be Paid',
+                  ),
+                  PaddedText(
+                      '\$${(invoice.totalCost() * 1.1).toStringAsFixed(2)}')
+                ],
+              )
+            ],
+          ),
+          p.Padding(
+            padding: p.EdgeInsets.all(30),
+            child: p.Text(
+              'Please ensure all cheques are payable to the ADAM FAMILY TRUST.',
+              style: p.Theme.of(context).header3.copyWith(
+                    fontStyle: p.FontStyle.italic,
+                  ),
+              textAlign: p.TextAlign.center,
+            ),
+          ),
+        ],
       );
+    },
+  );
 
   return pdf.save();
 }
