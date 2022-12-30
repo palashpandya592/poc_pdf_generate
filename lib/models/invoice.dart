@@ -19,6 +19,12 @@ class Invoice {
   }
 }
 
+class ImgData {
+  final String imgurl;
+
+  ImgData.name({required this.imgurl});
+}
+
 class LineItem {
   final String description;
   final double cost;

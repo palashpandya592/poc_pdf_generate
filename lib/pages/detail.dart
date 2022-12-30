@@ -20,17 +20,20 @@ class DetailPage extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => PdfPreviewPage(invoice: invoice),
+              builder: (context) => PdfPreviewPage(
+                invoice: invoice,
+              ),
             ),
           );
           // rootBundle.
         },
-        child: Icon(Icons.picture_as_pdf),
+        child: const Icon(Icons.picture_as_pdf),
       ),
       appBar: AppBar(
         title: Text(invoice.name),
       ),
       body: ListView(
+        shrinkWrap: true,
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -65,6 +68,7 @@ class DetailPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: invoice.items.length,
                     itemBuilder: (context, index) {
@@ -84,7 +88,6 @@ class DetailPage extends StatelessWidget {
                         title: Text(e.description),
                         trailing: Image.network(invoice.img)),
                   ),*/
-
                   DefaultTextStyle.merge(
                     style: Theme.of(context).textTheme.headline4,
                     child: Row(
